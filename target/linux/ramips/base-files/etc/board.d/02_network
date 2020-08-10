@@ -352,6 +352,7 @@ ramips_setup_interfaces()
 		ucidef_add_switch "switch1" \
 			"1:lan:4" "2:lan:3" "3:lan:2" "4:lan:1" "0:wan" "6@eth0"
 		;;
+	hilink,hlk-7688a|\
 	kn_rf)
 		ucidef_add_switch "switch0" \
 			"0:wan" "1:lan" "2:lan" "3:lan" "4:lan" "6@eth0"
@@ -632,6 +633,7 @@ ramips_setup_macs()
 		wan_mac=$(mtd_get_mac_binary factory 4)
 		lan_mac=$(mtd_get_mac_binary factory 46)
 		;;
+	hilink,hlk-7688a|\
 	oy-0001|\
 	phicomm,k2g)
 		lan_mac=$(mtd_get_mac_binary factory 40)

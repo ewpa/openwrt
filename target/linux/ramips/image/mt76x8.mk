@@ -85,6 +85,14 @@ define Device/hilink_hlk-7628n
 endef
 TARGET_DEVICES += hilink_hlk-7628n
 
+define Device/hilink_hlk-7688a
+  DTS := HLK-7688A
+  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  DEVICE_TITLE := Hi-Link HLK-7688A
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci kmod-usb-ledtrig-usbport
+endef
+TARGET_DEVICES += hilink_hlk-7688a
+
 define Device/hiwifi_hc5861b
   DTS := HC5861B
   IMAGE_SIZE := 15808k
