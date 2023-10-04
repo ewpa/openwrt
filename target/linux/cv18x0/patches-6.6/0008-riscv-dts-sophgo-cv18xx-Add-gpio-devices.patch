@@ -1,0 +1,109 @@
+From 53ebe26713247df9cec482075cbc27795d386d79 Mon Sep 17 00:00:00 2001
+From: Zoltan HERPAI <wigyori@uid0.hu>
+Date: Fri, 28 Jun 2024 15:10:43 +0000
+Subject: [PATCH 08/18] riscv: dts: sophgo: cv18xx: Add gpio devices
+
+Add common GPIO devices for the CV180x and CV181x soc.
+
+Signed-off-by: Inochi Amaoto <inochiama@outlook.com>
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+---
+ arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 73 ++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+index 55d4bc84faa0..d415cc758def 100644
+--- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: (GPL-2.0 OR MIT)
+ /*
+  * Copyright (C) 2023 Jisheng Zhang <jszhang@kernel.org>
++ * Copyright (C) 2023 Inochi Amaoto <inochiama@outlook.com>
+  */
+ 
+ #include <dt-bindings/interrupt-controller/irq.h>
+@@ -53,6 +54,78 @@
+ 		dma-noncoherent;
+ 		ranges;
+ 
++		gpio0: gpio@3020000 {
++			compatible = "snps,dw-apb-gpio";
++			reg = <0x3020000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			porta: gpio-controller@0 {
++				compatible = "snps,dw-apb-gpio-port";
++				gpio-controller;
++				#gpio-cells = <2>;
++				ngpios = <32>;
++				reg = <0>;
++				interrupt-controller;
++				#interrupt-cells = <2>;
++				interrupts = <60 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
++		gpio1: gpio@3021000 {
++			compatible = "snps,dw-apb-gpio";
++			reg = <0x3021000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			portb: gpio-controller@0 {
++				compatible = "snps,dw-apb-gpio-port";
++				gpio-controller;
++				#gpio-cells = <2>;
++				ngpios = <32>;
++				reg = <0>;
++				interrupt-controller;
++				#interrupt-cells = <2>;
++				interrupts = <61 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
++		gpio2: gpio@3022000 {
++			compatible = "snps,dw-apb-gpio";
++			reg = <0x3022000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			portc: gpio-controller@0 {
++				compatible = "snps,dw-apb-gpio-port";
++				gpio-controller;
++				#gpio-cells = <2>;
++				ngpios = <32>;
++				reg = <0>;
++				interrupt-controller;
++				#interrupt-cells = <2>;
++				interrupts = <62 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
++		gpio3: gpio@3023000 {
++			compatible = "snps,dw-apb-gpio";
++			reg = <0x3023000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			portd: gpio-controller@0 {
++				compatible = "snps,dw-apb-gpio-port";
++				gpio-controller;
++				#gpio-cells = <2>;
++				ngpios = <32>;
++				reg = <0>;
++				interrupt-controller;
++				#interrupt-cells = <2>;
++				interrupts = <63 IRQ_TYPE_LEVEL_HIGH>;
++			};
++		};
++
+ 		uart0: serial@4140000 {
+ 			compatible = "snps,dw-apb-uart";
+ 			reg = <0x04140000 0x100>;
+-- 
+2.20.1
+

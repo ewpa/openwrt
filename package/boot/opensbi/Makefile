@@ -41,7 +41,7 @@ define Package/opensbi_generic
   $(Package/opensbi)
   TITLE:=OpenSBI generic
   OPENSBI_IMAGE:=fw_dynamic.bin
-  DEPENDS:=@TARGET_cv18x0:u-boot-milkv_duo
+  DEPENDS:=+(TARGET_cv18x0):u-boot-milkv_duo
   PLAT:=generic
 endef
 
@@ -50,8 +50,8 @@ export GCC_HONOUR_COPTS=s
 MAKE_VARS = \
 	CROSS_COMPILE="$(TARGET_CROSS)"
 
-ifdef CONFIG_TARGET_cv18x0
-FW_FDT_PATH=$(STAGING_DIR_IMAGE)/asdasd.dtb
+ifdef CONFIG_TARGET_DEVICE_cv18x0_generic_DEVICE_milkv_duo
+FW_FDT_PATH=$(STAGING_DIR_IMAGE)/cv1800b-milkv-duo.dtb
 endif
 
 define Build/Compile

@@ -1,0 +1,103 @@
+From 6f1f2e3823dc0e4a9960c76792eea1d0a43c3f66 Mon Sep 17 00:00:00 2001
+From: AnnanLiu <annan.liu.xdu@outlook.com>
+Date: Thu, 28 Dec 2023 21:06:54 +0800
+Subject: [PATCH 18/18] riscv: dts: sophgo: add timer dt node for CV1800
+
+Add the timer device tree node to CV1800 SoC.
+This patch depends on the clk driver and reset driver.
+Clk driver link:
+https://lore.kernel.org/all/IA1PR20MB49539CDAD9A268CBF6CA184BBB9FA@IA1PR20MB4953.namprd20.prod.outlook.com/
+Reset driver link:
+https://lore.kernel.org/all/20231113005503.2423-1-jszhang@kernel.org/
+
+Signed-off-by: AnnanLiu <annan.liu.xdu@outlook.com>
+---
+ arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 72 ++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+index 82e828721df7..e87df337ec68 100644
+--- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+@@ -240,6 +240,78 @@
+ 			clock-frequency = <25000000>;
+ 		};
+ 
++		timer0: timer@030a0000 {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a0000 0x14>;
++			interrupts = <79 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER0>;
++			status = "okay";
++		};
++
++		timer1: timer@030a0014 {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a0014 0x14>;
++			interrupts = <80 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER1>;
++			status = "okay";
++		};
++
++		timer2: timer@030a0028 {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a0028 0x14>;
++			interrupts = <81 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER2>;
++			status = "okay";
++		};
++
++		timer3: timer@030a003c {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a003c 0x14>;
++			interrupts = <82 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER3>;
++			status = "okay";
++		};
++
++		timer4: timer@030a0050 {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a0050 0x14>;
++			interrupts = <83 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER4>;
++			status = "okay";
++		};
++
++		timer5: timer@30a0064 {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a0064 0x14>;
++			interrupts = <84 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER5>;
++			status = "okay";
++		};
++
++		timer6: timer@030a0078 {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a0078 0x14>;
++			interrupts = <85 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER6>;
++			status = "okay";
++		};
++
++		timer7: timer@030a008c {
++			compatible = "snps,dw-apb-timer";
++			reg = <0x030a008c 0x14>;
++			interrupts = <86 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&osc>;
++			resets = <&rst RST_TIMER7>;
++			status = "okay";
++		};
++
+ 		clint: timer@74000000 {
+ 			reg = <0x74000000 0x10000>;
+ 			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>;
+-- 
+2.20.1
+

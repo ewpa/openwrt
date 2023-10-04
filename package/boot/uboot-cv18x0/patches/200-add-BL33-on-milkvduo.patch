@@ -1,0 +1,53 @@
+diff -ruN u-boot-2024-05-13.old/arch/riscv/cpu/start.S u-boot-2024-05-13/arch/riscv/cpu/start.S
+--- u-boot-2024-05-13.old/arch/riscv/cpu/start.S	2024-05-13 17:15:46.000000000 +0200
++++ u-boot-2024-05-13/arch/riscv/cpu/start.S	2024-05-14 11:31:51.924686607 +0200
+@@ -39,6 +39,10 @@
+ .section .text
+ .globl _start
+ _start:
++#if CONFIG_IS_ENABLED(TARGET_MILKV_DUO)
++#include <asm/boot0.h>
++#endif
++_start_real:
+ #if CONFIG_IS_ENABLED(RISCV_MMODE)
+ 	csrr	a0, CSR_MHARTID
+ #endif
+diff -ruN u-boot-2024-05-13.old/arch/riscv/include/asm/boot0.h u-boot-2024-05-13/arch/riscv/include/asm/boot0.h
+--- u-boot-2024-05-13.old/arch/riscv/include/asm/boot0.h	1970-01-01 01:00:00.000000000 +0100
++++ u-boot-2024-05-13/arch/riscv/include/asm/boot0.h	2024-04-30 23:23:20.728599523 +0200
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * CVITEK u-boot header
++ */
++
++#ifndef __BOOT0_H__
++#define __BOOT0_H__
++
++/* BOOT0 header information */
++	j boot0_time_recode
++	.balign 4
++	.word 0x33334c42  /* b'BL33' */
++	.word 0xdeadbeea  /* CKSUM */
++	.word 0xdeadbeeb  /* SIZE */
++#ifdef CONFIG_SPL_BUILD
++	.quad	CONFIG_TEXT_BASE
++#else
++	.quad   CONFIG_TEXT_BASE
++#endif
++	.word 0xdeadbeec
++	.balign 4
++	j boot0_time_recode
++	.balign 4
++/* BOOT0 header end */
++boot0_time_recode:
++	csrr x1, time
++	la x2, BOOT0_START_TIME
++	sw x1, 0(x2)
++	j _start_real
++
++	.global BOOT0_START_TIME
++BOOT0_START_TIME:
++	.word 0
++
++#endif /* __BOOT0_H__ */

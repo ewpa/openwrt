@@ -1,0 +1,30 @@
+From 28ecd3215ebc6271584f3b7b186223cb30f6b05b Mon Sep 17 00:00:00 2001
+From: Xiaoguang Xing <xiaoguang.xing@sophgo.com>
+Date: Thu, 31 Aug 2023 10:21:03 +0800
+Subject: [PATCH 01/18] riscv: Add Sophgo SoC platform hardware support
+
+Signed-off-by: Xiaoguang Xing <xiaoguang.xing@sophgo.com>
+---
+ arch/riscv/Kconfig.socs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
+index 30fd6a512828..ad7e01a959e5 100644
+--- a/arch/riscv/Kconfig.socs
++++ b/arch/riscv/Kconfig.socs
+@@ -111,4 +111,12 @@ config SOC_CANAAN_K210_DTB_SOURCE
+ 
+ endif # ARCH_CANAAN
+ 
++config ARCH_SOPHGO
++	def_bool SOC_SOPHGO
++
++config SOC_SOPHGO
++	bool "Sophgo SoCs"
++	help
++	  This enables support for Sophgo SoC platform hardware.
++
+ endmenu # "SoC selection"
+-- 
+2.20.1
+

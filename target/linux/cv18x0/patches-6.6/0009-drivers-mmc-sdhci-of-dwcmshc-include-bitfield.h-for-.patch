@@ -1,0 +1,26 @@
+From 1fc5411e948548ed58a082530f25a24edf1b7672 Mon Sep 17 00:00:00 2001
+From: Zoltan HERPAI <wigyori@uid0.hu>
+Date: Fri, 28 Jun 2024 15:11:04 +0000
+Subject: [PATCH 09/18] drivers: mmc: sdhci-of-dwcmshc: include bitfield.h for
+ FIELD_PREP
+
+Signed-off-by: Zoltan HERPAI <wigyori@uid0.hu>
+---
+ drivers/mmc/host/sdhci-of-dwcmshc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mmc/host/sdhci-of-dwcmshc.c b/drivers/mmc/host/sdhci-of-dwcmshc.c
+index a0524127ca07..2d19b1403879 100644
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -18,6 +18,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/reset.h>
+ #include <linux/sizes.h>
++#include <linux/bitfield.h>
+ 
+ #include "sdhci-pltfm.h"
+ 
+-- 
+2.20.1
+

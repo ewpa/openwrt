@@ -1,0 +1,58 @@
+From 945c22abfac4989df3e7d46f773a75518a61cdef Mon Sep 17 00:00:00 2001
+From: AnnanLiu <annan.liu.xdu@outlook.com>
+Date: Thu, 28 Dec 2023 21:08:17 +0800
+Subject: [PATCH 17/18] riscv: dts: sophgo: add watchdog dt node for CV1800
+
+Add the watchdog device tree node to cv1800 SoC.
+This patch depends on the clk driver and reset driver.
+Clk driver link:
+https://lore.kernel.org/all/IA1PR20MB49539CDAD9A268CBF6CA184BBB9FA@IA1PR20MB4953.namprd20.prod.outlook.com/
+Reset driver link:
+https://lore.kernel.org/all/20231113005503.2423-1-jszhang@kernel.org/
+
+Signed-off-by: AnnanLiu <annan.liu.xdu@outlook.com>
+---
+ arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts |  4 ++++
+ arch/riscv/boot/dts/sophgo/cv18xx.dtsi           | 14 ++++++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts b/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts
+index 6944f3c1c6c6..22c3b5be0739 100644
+--- a/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts
++++ b/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts
+@@ -45,3 +45,7 @@
+ &uart0 {
+ 	status = "okay";
+ };
++
++&watchdog0 {
++	status = "okay";
++};
+diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+index 37c71808b048..82e828721df7 100644
+--- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+@@ -226,6 +226,20 @@
+ 			riscv,ndev = <101>;
+ 		};
+ 
++		watchdog0: watchdog@3010000{
++			compatible = "snps,dw-wdt";
++			reg = <0x3010000 0x100>;
++			interrupts = <58 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&pclk>;
++			resets = <&rst RST_WDT>;
++		};
++
++		pclk: pclk {
++			#clock-cells = <0>;
++			compatible = "fixed-clock";
++			clock-frequency = <25000000>;
++		};
++
+ 		clint: timer@74000000 {
+ 			reg = <0x74000000 0x10000>;
+ 			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>;
+-- 
+2.20.1
+

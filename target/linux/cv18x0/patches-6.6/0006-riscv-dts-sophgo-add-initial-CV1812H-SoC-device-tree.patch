@@ -1,0 +1,48 @@
+From 4f879141f6c39cada3681d5c86e335405f60f7d4 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@outlook.com>
+Date: Thu, 19 Oct 2023 07:18:53 +0800
+Subject: [PATCH 06/18] riscv: dts: sophgo: add initial CV1812H SoC device tree
+
+Add initial device tree for the CV1812H RISC-V SoC by SOPHGO.
+
+Signed-off-by: Inochi Amaoto <inochiama@outlook.com>
+Acked-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+---
+ arch/riscv/boot/dts/sophgo/cv1812h.dtsi | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/sophgo/cv1812h.dtsi
+
+diff --git a/arch/riscv/boot/dts/sophgo/cv1812h.dtsi b/arch/riscv/boot/dts/sophgo/cv1812h.dtsi
+new file mode 100644
+index 000000000000..3e7a942f5c1a
+--- /dev/null
++++ b/arch/riscv/boot/dts/sophgo/cv1812h.dtsi
+@@ -0,0 +1,24 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (C) 2023 Inochi Amaoto <inochiama@outlook.com>
++ */
++
++#include <dt-bindings/interrupt-controller/irq.h>
++#include "cv18xx.dtsi"
++
++/ {
++	compatible = "sophgo,cv1812h";
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x80000000 0x10000000>;
++	};
++};
++
++&plic {
++	compatible = "sophgo,cv1812h-plic", "thead,c900-plic";
++};
++
++&clint {
++	compatible = "sophgo,cv1812h-clint", "thead,c900-clint";
++};
+-- 
+2.20.1
+
