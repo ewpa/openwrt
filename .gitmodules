@@ -1,0 +1,3 @@
+[submodule "vizos"]
+	path = feeds-vizos
+	url = https://github.com/ewpa/VizOS.git
