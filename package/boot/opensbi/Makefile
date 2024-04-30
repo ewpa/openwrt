@@ -29,7 +29,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/opensbi
     SECTION:=boot
     CATEGORY:=Boot Loaders
-    DEPENDS:=@(TARGET_sifiveu||TARGET_d1)
+    DEPENDS:=@(TARGET_sifiveu||TARGET_d1||TARGET_cv18x0)
     URL:=https://github.com/riscv/opensbi/blob/master/README.md
     VARIANT:=$(subst _,/,$(subst opensbi_,,$(1)))
     TITLE:=OpenSBI generic
@@ -41,6 +41,7 @@ define Package/opensbi_generic
   $(Package/opensbi)
   TITLE:=OpenSBI generic
   OPENSBI_IMAGE:=fw_dynamic.bin
+  DEPENDS:=@TARGET_cv18x0:u-boot-milkv_duo
   PLAT:=generic
 endef
 
@@ -49,10 +50,14 @@ export GCC_HONOUR_COPTS=s
 MAKE_VARS = \
 	CROSS_COMPILE="$(TARGET_CROSS)"
 
+ifdef CONFIG_TARGET_cv18x0
+FW_FDT_PATH=$(STAGING_DIR_IMAGE)/asdasd.dtb
+endif
+
 define Build/Compile
 	$(eval $(Package/opensbi_$(BUILD_VARIANT))) \
 		+$(MAKE_VARS) $(MAKE) -C $(PKG_BUILD_DIR) \
-		PLATFORM=$(PLAT)
+		PLATFORM=$(PLAT) FW_FDT_PATH=$(FW_FDT_PATH)
 endef
 
 define Build/InstallDev
