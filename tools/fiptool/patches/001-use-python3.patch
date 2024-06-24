@@ -1,0 +1,9 @@
+diff -ruN fiptool-2024-05-23/fiptool fiptool.new/fiptool
+--- fiptool-2024-05-23/fiptool	2024-05-23 03:13:34.000000000 +0000
++++ fiptool.new/fiptool	2024-06-24 21:50:47.072320769 +0000
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import os
+ import lzma
