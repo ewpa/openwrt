@@ -18,7 +18,7 @@ include $(INCLUDE_DIR)/u-boot.mk
 include $(INCLUDE_DIR)/package.mk
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.zst
-PKG_MIRROR_HASH:=3d69884648f0412b500f5968c2d3014acb51b3a97bc256e306ff9cac99a5fec0
+PKG_MIRROR_HASH:=90bee1daad0ac6bfffbcecdff672a8a0d325dc4786a6d3cbefb6def423ed8983
 
 define U-Boot/Default
   BUILD_TARGET:=cv18x0
