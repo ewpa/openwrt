@@ -1,0 +1,45 @@
+From: Inochi Amaoto <inochiama@outlook.com>
+To: Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Inochi Amaoto <inochiama@outlook.com>
+Cc: Jisheng Zhang <jszhang@kernel.org>,
+	Liu Gui <kenneth.liu@sophgo.com>,
+	Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
+	dlan@gentoo.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: [PATCH v3 2/2] riscv: dts: sophgo: cv18xx: add top misc system controller
+Date: Wed, 14 Feb 2024 14:33:15 +0800	[thread overview]
+Message-ID: <PH7PR20MB4962D7791717C6D579BC1CCFBB4E2@PH7PR20MB4962.namprd20.prod.outlook.com> (raw)
+In-Reply-To: <PH7PR20MB4962F822A64CB127911978AABB4E2@PH7PR20MB4962.namprd20.prod.outlook.com>
+
+Add top misc system controller dt node for CV18XX/SG200x.
+
+Signed-off-by: Inochi Amaoto <inochiama@outlook.com>
+---
+ arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+index 2d6f4a4b1e58..908d858a63ab 100644
+--- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+@@ -53,6 +53,12 @@ soc {
+ 		dma-noncoherent;
+ 		ranges;
+
++		topctrl: syscon@3000000 {
++			compatible = "sophgo,cv1800-top-syscon",
++				     "syscon", "simple-mfd";
++			reg = <0x03000000 0x1000>;
++		};
++
+ 		gpio0: gpio@3020000 {
+ 			compatible = "snps,dw-apb-gpio";
+ 			reg = <0x3020000 0x1000>;
+--
+2.43.1

@@ -19,9 +19,9 @@ index efd8bbdbf1ca..37c71808b048 100644
 --- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
 +++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
 @@ -7,6 +7,7 @@
+ #include <dt-bindings/clock/sophgo,cv1800.h>
  #include <dt-bindings/gpio/gpio.h>
  #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/clock/sophgo,cv1800.h>
 +#include <dt-bindings/reset/sophgo,cv1800b-reset.h>
  
  / {
@@ -78,27 +78,6 @@ index efd8bbdbf1ca..37c71808b048 100644
  			reg-shift = <2>;
  			reg-io-width = <4>;
  			status = "disabled";
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index ccd59ddd7610..2034f69d5953 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -213,7 +213,7 @@ config RESET_SCMI
- 
- config RESET_SIMPLE
- 	bool "Simple Reset Controller Driver" if COMPILE_TEST || EXPERT
--	default ARCH_ASPEED || ARCH_BCMBCA || ARCH_BITMAIN || ARCH_REALTEK || ARCH_STM32 || (ARCH_INTEL_SOCFPGA && ARM64) || ARCH_SUNXI || ARC
-+	default ARCH_ASPEED || ARCH_BCMBCA || ARCH_BITMAIN || ARCH_REALTEK || ARCH_SOPHGO || ARCH_STM32 || (ARCH_INTEL_SOCFPGA && ARM64) || ARCH_SUNXI || ARC
- 	depends on HAS_IOMEM
- 	help
- 	  This enables a simple reset controller driver for reset lines that
-@@ -228,6 +228,7 @@ config RESET_SIMPLE
- 	   - RCC reset controller in STM32 MCUs
- 	   - Allwinner SoCs
- 	   - SiFive FU740 SoCs
-+	   - Sophgo SoCs
- 
- config RESET_SOCFPGA
- 	bool "SoCFPGA Reset Driver" if COMPILE_TEST && (!ARM || !ARCH_INTEL_SOCFPGA)
 diff --git a/drivers/reset/reset-simple.c b/drivers/reset/reset-simple.c
 index 7ea5adbf2097..573753ae3e08 100644
 --- a/drivers/reset/reset-simple.c

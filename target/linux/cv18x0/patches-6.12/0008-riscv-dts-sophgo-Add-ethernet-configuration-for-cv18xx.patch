@@ -1,0 +1,106 @@
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Chen Wang <unicorn_wang@outlook.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>
+Cc: Liu Gui <kenneth.liu@sophgo.com>, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH] riscv: dts: sophgo: Add ethernet configuration for cv18xx
+Date: Mon, 28 Oct 2024 09:13:12 +0800	[thread overview]
+Message-ID: <20241028011312.274938-1-inochiama@gmail.com> (raw)
+
+Add DT configuration for ethernet controller for cv18xx SoC.
+
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+ .../boot/dts/sophgo/cv1812h-huashan-pi.dts    |  4 ++
+ arch/riscv/boot/dts/sophgo/cv18xx.dtsi        | 49 +++++++++++++++++++
+ 2 files changed, 53 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
+index 26b57e15adc1..a0acae675a82 100644
+--- a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
++++ b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
+@@ -55,6 +55,10 @@ &emmc {
+ 	non-removable;
+ };
+ 
++&gmac0 {
++	status = "okay";
++};
++
+ &sdhci0 {
+ 	status = "okay";
+ 	bus-width = <4>;
+diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+index c18822ec849f..50933e5b4c75 100644
+--- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+@@ -210,6 +210,55 @@ i2c4: i2c@4040000 {
+ 			status = "disabled";
+ 		};
+ 
++		gmac0: ethernet@4070000 {
++			compatible = "snps,dwmac-3.70a";
++			reg = <0x04070000 0x10000>;
++			clocks = <&clk CLK_AXI4_ETH0>, <&clk CLK_ETH0_500M>;
++			clock-names = "stmmaceth", "ptp_ref";
++			interrupts = <31 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq";
++			phy-handle = <&phy0>;
++			phy-mode = "rmii";
++			rx-fifo-depth = <8192>;
++			tx-fifo-depth = <8192>;
++			snps,multicast-filter-bins = <0>;
++			snps,perfect-filter-entries = <1>;
++			snps,aal;
++			snps,txpbl = <8>;
++			snps,rxpbl = <8>;
++			snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
++			snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
++			snps,axi-config = <&gmac0_stmmac_axi_setup>;
++			status = "disabled";
++
++			mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				phy0: phy@0 {
++					compatible = "ethernet-phy-ieee802.3-c22";
++					reg = <0>;
++				};
++			};
++
++			gmac0_mtl_rx_setup: rx-queues-config {
++				snps,rx-queues-to-use = <1>;
++				queue0 {};
++			};
++
++			gmac0_mtl_tx_setup: tx-queues-config {
++				snps,tx-queues-to-use = <1>;
++				queue0 {};
++			};
++
++			gmac0_stmmac_axi_setup: stmmac-axi-config {
++				snps,blen = <16 8 4 0 0 0 0>;
++				snps,rd_osr_lmt = <2>;
++				snps,wr_osr_lmt = <1>;
++			};
++		};
++
+ 		uart0: serial@4140000 {
+ 			compatible = "snps,dw-apb-uart";
+ 			reg = <0x04140000 0x100>;
+-- 
+2.47.0
